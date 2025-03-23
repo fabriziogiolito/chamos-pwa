@@ -37,7 +37,7 @@ A Next.js Progressive Web Application that enables friends to track fitness acti
 - **Framework**: Next.js 14+ (App Router)
 - **State Management**: 
   - React Context API for UI state
-  - Zustand for global state management
+  - Redux for global state management
 - **Styling**: 
   - Tailwind CSS
   - shadcn/ui for component library (built on Radix UI)
