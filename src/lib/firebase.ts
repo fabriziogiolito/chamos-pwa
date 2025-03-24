@@ -1,6 +1,6 @@
 import { initializeApp, getApps } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, initializeFirestore, CACHE_SIZE_UNLIMITED, persistentLocalCache, persistentMultipleTabManager } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getMessaging, getToken } from 'firebase/messaging';
 
@@ -16,7 +16,16 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 const auth = getAuth(app);
-const db = getFirestore(app);
+
+// Initialize Firestore with persistence
+const db = typeof window !== 'undefined' 
+  ? initializeFirestore(app, {
+      localCache: persistentLocalCache({
+        tabManager: persistentMultipleTabManager()
+      })
+    })
+  : getFirestore(app);
+
 const storage = getStorage(app);
 const messaging = typeof window !== 'undefined' ? getMessaging(app) : null;
 
